@@ -15,8 +15,8 @@ import javax.inject.Inject
 @HiltViewModel
 class InplayMatchesViewModel @Inject constructor(private val inplayMatchesRepository: InplayMatchesRepository): ViewModel() {
 
-    private val _inplayMatchesState = MutableStateFlow<MatchesState>(MatchesState.Empty)
-    private val inplayMatchesState: StateFlow<MatchesState> = _inplayMatchesState
+    private var _inplayMatchesState = MutableStateFlow<MatchesState>(MatchesState.Empty)
+    val inplayMatchesState: StateFlow<MatchesState> = _inplayMatchesState
 
     init {
         getAllInPlayMatches()
