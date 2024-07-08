@@ -1,16 +1,14 @@
 package com.example.buzzscore.data.remote.models
 
-import com.example.buzzscore.util.API_TOKEN
-import com.example.buzzscore.util.GET_MATCHES_ENDPOINT
+import com.example.buzzscore.util.GET_INPLAY_FIXTURES
+import com.example.buzzscore.util.GET_UPCOMING_MATCHES
 import retrofit2.http.GET
-import retrofit2.http.Query
 
 interface ElenaApiService {
 
+    @GET(GET_INPLAY_FIXTURES)
+    suspend fun getInplayMatches(): InplayMatchesResponse
 
-
-    @GET(GET_MATCHES_ENDPOINT)
-    suspend fun getMatches(
-        @Query("apikey") apikey: String = API_TOKEN
-    ): UpcomingMatchesResponse
+    @GET(GET_UPCOMING_MATCHES)
+    suspend fun getUpcomingMatches(): UpcomingMatchesResponse
 }

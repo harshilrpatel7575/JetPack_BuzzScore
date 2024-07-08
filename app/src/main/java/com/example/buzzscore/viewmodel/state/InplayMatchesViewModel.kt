@@ -13,28 +13,29 @@ import retrofit2.HttpException
 import javax.inject.Inject
 
 @HiltViewModel
-class InplayMatchesViewModel @Inject constructor(private val inplayMatchesRepository: InplayMatchesRepository): ViewModel() {
+class InplayMatchesViewModel @Inject constructor(private val inPlayMatchesRepository: InplayMatchesRepository): ViewModel() {
 
-    private var _inplayMatchesState = MutableStateFlow<MatchesState>(MatchesState.Empty)
-    val inplayMatchesState: StateFlow<MatchesState> = _inplayMatchesState
+    private var _inPlayMatchesState = MutableStateFlow<MatchesState>(MatchesState.Empty)
+    val inPlayMatchesState: StateFlow<MatchesState> =  _inPlayMatchesState
 
     init {
         getAllInPlayMatches()
     }
 
-    private fun getAllInPlayMatches(){
-        _inplayMatchesState.value = MatchesState.Loading
+    private fun getAllInPlayMatches() {
+        _inPlayMatchesState.value = MatchesState.Loading
 
-        viewModelScope.launch(Dispatchers.IO){
+        viewModelScope.launch(Dispatchers.IO) {
+
             try {
-                val inplayMatchesResponse = inplayMatchesRepository.getAllInPlayMatches()
-                _inplayMatchesState.value = MatchesState.Success(inplayMatchesResponse)
+                val inplayMatchesResponse = inPlayMatchesRepository.getAllInPlayMatches()
+                _inPlayMatchesState.value = MatchesState.Success(inplayMatchesResponse)
             }
-            catch(exception: HttpException){
-                _inplayMatchesState.value = MatchesState.Error("No internet connection")
+            catch (exception: HttpException) {
+                _inPlayMatchesState.value = MatchesState.Error("Something went wrong")
             }
-            catch (exception: IOException ){
-                _inplayMatchesState.value = MatchesState.Error("Something went wrong")
+            catch (exception: IOException) {
+                _inPlayMatchesState.value = MatchesState.Error("No internet connection")
             }
         }
     }
